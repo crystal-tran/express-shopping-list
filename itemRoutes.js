@@ -46,12 +46,33 @@ router.get("/:name", function(req, res){
 
 /**PATCH/items/:name: accepts JSON body, modifies item and returns it */
 router.patch("/:name", function(req, res){
+  const itemName = req.params.name;
+  const updateItem = req.body;
 
+  for(let item of db.items){
+    if(item["name"] === itemName){
+      const i = db.items.indexOf(item);
+      db.items[i] = updateItem;
+
+      return res.json({
+        updated: db.items[i]
+      });
+    }
+  }
+  throw new NotFoundError();
 });
 
 
 /**DELETE/items/:name: delete item and returns JSON object saying it
  * successfully deleted  */
 router.delete("/:name", function(req, res){
+  const itemName = req.params.name;
+  for(let i = 0; i < db.items.length; i++){
+    if(db.items[i].name === itemName){
+      db.items.splice(i, 1);
 
+      return res.json({message: "Deleted"})
+    }
+  }
+  throw new NotFoundError();
 });
