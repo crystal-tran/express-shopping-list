@@ -7,8 +7,6 @@ const { NotFoundError } = require("./expressError");
 const db = require("./fakeDb");
 const router = new express.Router();
 
-module.exports = router;
-
 /**GET/items: returns a list of shopping items */
 router.get("/", function(req, res){
   return res.json({ items: db.items});
@@ -76,3 +74,5 @@ router.delete("/:name", function(req, res){
   }
   throw new NotFoundError();
 });
+
+module.exports = router;
