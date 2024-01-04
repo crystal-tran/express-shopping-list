@@ -7,9 +7,9 @@ const router = new express.Router();
 
 module.exports = router;
 
-/**GET/items: get list of shopping items */
+/**GET/items: returns a list of shopping items */
 router.get("/", function(req, res){
-
+  return res.json({ items: db.items});
 });
 
 
