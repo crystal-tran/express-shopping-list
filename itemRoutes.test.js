@@ -54,5 +54,20 @@ describe("POST /items", function(){
 });
 
 
+describe("GET /items:name", function(){
+  it("get an item", async function(){
+    const resp = await request(app).get('/items/hawaii');
+
+    expect(resp.body).toEqual(
+      {
+        name:"hawaii",
+        price:"100000000000000000000000"
+      }
+    );
+
+  })
+})
+
+
 
 
