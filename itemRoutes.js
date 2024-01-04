@@ -1,6 +1,8 @@
 /**Routes for items in shopping app. */
 
 const express = require("express");
+//should we import expressError in both router file and app file or just in app file?
+const { NotFoundError } = require("./expressError");
 
 const db = require("./fakeDb");
 const router = new express.Router();
@@ -15,13 +17,30 @@ router.get("/", function(req, res){
 
 /**POST/items: accepts JSON body and adds an item to database and return it*/
 router.post("/", function(req, res){
-
+  const name = req.body.name;
+  const price = req.body.price;
+  db.items.push({
+    name,
+    price
+  });
+  return res.json({
+    added:{
+      name,
+      price
+    }
+  });
 });
 
 
 /**GET/items/:name : returns a single item */
 router.get("/:name", function(req, res){
-
+  const itemName = req.params.name;
+  for(const item of db.items){
+    if(item["name"] === itemName){
+      return res.json(item);
+    }
+  }
+  throw new NotFoundError();
 });
 
 
